@@ -1,0 +1,84 @@
+Feature,Importance
+T,21.518412674271023
+salt,6.585742398318563
+c,3.332781315421806
+Nitrogen-to-carbon atom ratio,0.5853012757137752
+Number of carbonyl groups,0.4536563454654746
+Types of organic solvents,0.3464622136070329
+Molecular radius,0.3288789907260597
+Number of sulfones,0.27987568153477016
+Molecular dipole moment,0.25815311098214166
+Average atomic mass of heavy atoms,0.23675616986364106
+Number of esters,0.21167596366123123
+Number of covalent bond units,0.20771904114727846
+Number of chiral carbons,0.18597463473940185
+Cluster projection,0.17184509286517335
+Melting point,0.1668855109613629
+solvent_ratio_type,0.16194718864330765
+Water solubility,0.16175504714821615
+Number of nitrogen atoms,0.15289097983401245
+Lipid solubility,0.15244196388707149
+Maximum ring size,0.14077986766958278
+Hydrogen-to-carbon atom ratio,0.13519500445726682
+Number of carbon-carbon triple bonds,0.12774551499967315
+Number of chlorides,0.12345069924105853
+Surface tension,0.12278365215550473
+Refractive index,0.11504426432876957
+Number of undefined stereocenters,0.11000647521445046
+Does it have a plane of symmetry,0.10557952660689625
+Molecular weight,0.10107638246789992
+Number of fluorine atoms,0.1006180590075944
+Number of amines,0.09707437017458853
+Is it a chiral Molecule,0.09324541240732276
+Average electron affinity,0.09231435273855304
+Number of hydrogen bond acceptors,0.08883806652825352
+Number of rotatable bonds.1,0.08422675915994753
+Does it have stereocenters,0.08241505653390643
+Fluorine-to-carbon atom ratio,0.08030547099907823
+Viscosity,0.07702431661914855
+Number of fluorides,0.07559578766464944
+Average ionization energy,0.07457466945356347
+Molecular complexity,0.07061560072496761
+Number of aromatic bonds,0.07052549386487399
+Number of silicon atoms,0.06814497273214906
+Topological polar surface area ,0.06671233536395345
+Does it have a center of symmetry,0.06607587529908328
+Chlorine-to-carbon atom ratio,0.06524092672458197
+Average atomic mass,0.06383943086720148
+The ratio of carbon atoms to oxygen atoms,0.06350756103668828
+Halogen-to-carbon atom ratio,0.06341588324308625
+Polarizability,0.06197166933783813
+Number of sulfoxides,0.06052137031009543
+Isotopic atom count,0.06003009623996434
+Number of heavy atoms,0.059027151712478985
+Number of siloxanes,0.055707340542582265
+Number of chlorine atoms,0.05516466459390614
+The number of carbon atoms,0.054533287532004704
+The number of atoms,0.0541778281212858
+Number of nitriles,0.05329126415767811
+Number of rotatable bonds,0.05232584545733323
+Number of carbon-carbon double bonds,0.050788479513768636
+Vapor density,0.049018296202455125
+Number of ethers,0.04566431029524822
+2ar volume,0.045515284129225474
+Number of thioethers,0.044516219542728955
+Boiling point,0.040976948685398716
+Average electronegativity,0.04046201803438798
+Log P,0.03910727919185193
+Number of aromatic rings,0.038747448367404555
+The number of oxygen atoms,0.03775362384386625
+Vapor pressure,0.037735714058224915
+Density,0.03705592061502052
+2ar refractivity,0.03659150561914275
+Silicon-to-carbon atom ratio,0.036416537359111475
+Sulfur-to-carbon atom ratio,0.03566373483746495
+Number of sulfur atoms,0.034671966365567575
+Flash point,0.03231785196389543
+Isochoric specific volume,0.032185346016336734
+Molecular polarizability,0.030440625624238327
+The number of rings,0.030262844380069587
+Number of ketones,0.02640421373095043
+Number of halogen atoms,0.02559664492090461
+Minimum ring size,0.024288007310132455
+Number of hydrogen atoms,0.02410840493079889
+Rigidity/Flexibility,0.022654578083725507

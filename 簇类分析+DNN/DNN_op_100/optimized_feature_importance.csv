@@ -1,0 +1,60 @@
+Feature,Importance
+T (多项式),20.486837887209116
+salt,6.783036484983265
+c,3.437646364815939
+Molecular complexity,1.530909170977925
+Cluster projection,1.2471758776500075
+Types of organic solvents,0.8121247083167231
+Viscosity,0.6298165565213323
+Number of undefined stereocenters,0.4362558861710818
+Water solubility,0.40152981657734266
+Number of heavy atoms,0.38712180612906816
+Molecular dipole moment,0.2873254956689331
+Molecular weight,0.28566019760674527
+Number of chiral carbons,0.25885789979862944
+Maximum ring size,0.25654672690671904
+Number of carbonyl groups,0.25464837314554856
+Polarizability,0.23994524450964452
+The number of carbon atoms,0.22089878770420954
+Molecular radius,0.2043021874414391
+Does it have stereocenters,0.20288596223559066
+Number of hydrogen bond acceptors,0.19713468206271018
+Refractive index,0.1931619426077404
+The number of atoms,0.18695575862366934
+Lipid solubility,0.17839104758318386
+solvent_ratio_type,0.17312553960955707
+Does it have a plane of symmetry,0.1721225960348828
+Topological polar surface area ,0.164360523490759
+The ratio of carbon atoms to oxygen atoms,0.15977451946295262
+Is it a chiral Molecule,0.1487114805837293
+Average electron affinity,0.1473275935724483
+Number of covalent bond units,0.14452454008585006
+Average atomic mass of heavy atoms,0.14345796489115692
+Number of rotatable bonds.1,0.1406609607421116
+Number of fluorine atoms,0.12472236347000021
+Number of sulfones,0.12370350348973547
+Halogen-to-carbon atom ratio,0.12246397833810732
+Melting point,0.10263321279511736
+Number of chlorides,0.09102094873038583
+Surface tension,0.08457661392781864
+Number of fluorides,0.08321328050856643
+Average ionization energy,0.08101982829954842
+Fluorine-to-carbon atom ratio,0.07585921263786481
+Number of carbon-carbon double bonds,0.07383400829630679
+Hydrogen-to-carbon atom ratio,0.07272965352711576
+Average atomic mass,0.06860105924806863
+Number of chlorine atoms,0.06489181250804663
+Number of rotatable bonds,0.06195051932007425
+Number of sulfoxides,0.05822635626671384
+Number of esters,0.057500925471069664
+Does it have a center of symmetry,0.047567433256367274
+Chlorine-to-carbon atom ratio,0.044965947566531585
+Number of carbon-carbon triple bonds,0.01614745003741218
+Number of aromatic bonds,0.014612552834372839
+Number of siloxanes,0.010328039586935556
+Nitrogen-to-carbon atom ratio,0.009419619488054077
+Number of silicon atoms,0.004537314694445604
+Isotopic atom count,0.0
+Number of amines,0.0
+Number of nitriles,-0.0009032016935704545
+Number of nitrogen atoms,-0.009376505944992331

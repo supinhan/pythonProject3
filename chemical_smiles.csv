@@ -1,0 +1,39 @@
+Abbreviation,Chemical_Name,SMILES
+EC,Ethylene carbonate,C1COC(=O)O1
+PC,Propylene carbonate,CC1COC(=O)O1
+DMC,Dimethyl carbonate,COC(=O)OC
+EMC,Ethyl methyl carbonate,CCOC(=O)OC
+DEC,Diethyl carbonate,CCOC(=O)OCC
+DME,"1,2-Dimethoxyethane",COCCOC
+DMSO,Dimethyl sulfoxide,CS(=O)C
+AN,Acetonitrile,CC#N
+MOEMC,2-Methoxyethyl methyl carbonate,COCCOC(=O)OC
+TFP,"Tris(2,2,2-trifluoroethyl) phosphate",O=P(OCC(F)(F)F)(OCC(F)(F)F)OCC(F)(F)F
+EA,Ethyl acetate,CCOC(C)=O
+MA,Methyl acetate,COC(C)=O
+FEC,Fluoroethylene carbonate,FC1COC(=O)O1
+DOL,"1,3-Dioxolane",C1COCO1
+2-MeTHF,2-Methyltetrahydrofuran,CC1CCCO1
+DMM,Dimethoxymethane,COCOC
+Freon 11,Trichlorofluoromethane,FC(Cl)(Cl)Cl
+Methylene chloride,Dichloromethane,ClCCl
+THF,Tetrahydrofuran,C1CCCO1
+Toluene,Toluene,Cc1ccccc1
+Sulfolane,Sulfolane,O=S1(=O)CCCC1
+2-Glyme,Diglyme (Diethylene glycol dimethyl ether),COCCOCCOC
+3-Glyme,Triglyme (Triethylene glycol dimethyl ether),COCCOCCOCCOC
+4-Glyme,Tetraglyme (Tetraethylene glycol dimethyl ether),COCCOCCOCCOCCOC
+3-Me-2-Oxazolidinone,3-Methyl-2-oxazolidinone,CN1CCOC1=O
+3-MeSulfolane,3-Methylsulfolane,CC1CCS(=O)(=O)C1
+Ethyldiglyme,Diethylene glycol diethyl ether,CCOCCOCCOCC
+DMF,"N,N-Dimethylformamide",CN(C)C=O
+Ethylbenzene,Ethylbenzene,CCc1ccccc1
+Ethylmonoglyme,"1,2-Diethoxyethane",CCOCCOCC
+Benzene,Benzene,c1ccccc1
+g-Butyrolactone,Gamma-Butyrolactone,O=C1CCCO1
+Cumene,Isopropylbenzene,CC(C)c1ccccc1
+Propyl sulfone,Dipropyl sulfone,CCCS(=O)(=O)CCC
+Pseudocumene,"1,2,4-Trimethylbenzene",Cc1cc(C)c(C)cc1
+TEOS,Tetraethyl orthosilicate,CCO[Si](OCC)(OCC)OCC
+m-Xylene,m-Xylene,Cc1cccc(C)c1
+o-Xylene,o-Xylene,Cc1ccccc1C

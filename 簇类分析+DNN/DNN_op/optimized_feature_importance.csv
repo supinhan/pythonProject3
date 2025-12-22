@@ -1,0 +1,60 @@
+Feature,Importance
+T (多项式),21.29560232128192
+salt,6.31135232011937
+c,3.4672361017852524
+The number of atoms,1.153503599630611
+Does it have stereocenters,0.5376731275956939
+solvent_ratio_type,0.5030069550359082
+Molecular complexity,0.4445131248241784
+Number of nitrogen atoms,0.369679970637888
+Cluster projection,0.3676365497251951
+Surface tension,0.2746086355472992
+Viscosity,0.2702761807251785
+Does it have a plane of symmetry,0.2474369061592457
+Number of fluorine atoms,0.24242980931385008
+Types of organic solvents,0.22084024855828402
+Polarizability,0.21679016485451727
+Number of heavy atoms,0.21102121169831145
+Isotopic atom count,0.19945701519167125
+Molecular dipole moment,0.19799622577962767
+Number of hydrogen bond acceptors,0.1916149744463061
+Maximum ring size,0.17530724632200387
+Number of covalent bond units,0.15923131031153404
+Is it a chiral Molecule,0.1320995490143518
+Number of sulfoxides,0.12183867556887855
+Number of sulfones,0.12119972305185749
+Number of chiral carbons,0.10285166780671677
+Number of carbonyl groups,0.1016008080857415
+Average atomic mass,0.09972645893970819
+Number of fluorides,0.09642380627495184
+Halogen-to-carbon atom ratio,0.0932756599495415
+Number of carbon-carbon triple bonds,0.09278232671187123
+Lipid solubility,0.09155411486950844
+Average atomic mass of heavy atoms,0.09055831136110512
+Number of chlorine atoms,0.08894582679532352
+Topological polar surface area ,0.08888089819285194
+Number of undefined stereocenters,0.08679289204571647
+The number of carbon atoms,0.08675746911550186
+Number of rotatable bonds,0.08635690509240342
+Molecular weight,0.0854051221658284
+Average electron affinity,0.08457217177227998
+Molecular radius,0.08163348208112423
+Water solubility,0.07800451377514683
+Fluorine-to-carbon atom ratio,0.07651019765098373
+The ratio of carbon atoms to oxygen atoms,0.07271460470029792
+Number of chlorides,0.0712850328110037
+Refractive index,0.06790470312663315
+Number of silicon atoms,0.06634291242889365
+Number of amines,0.057926197613874984
+Does it have a center of symmetry,0.05686074649633797
+Number of siloxanes,0.05559321831391435
+Average ionization energy,0.050890101288541476
+Nitrogen-to-carbon atom ratio,0.04368455672985798
+Number of aromatic bonds,0.042812253176823224
+Hydrogen-to-carbon atom ratio,0.04238830747623581
+Number of esters,0.04130508334621896
+Chlorine-to-carbon atom ratio,0.03617694993002174
+Number of rotatable bonds.1,0.029424845858617397
+Number of carbon-carbon double bonds,0.01760972245501431
+Melting point,-0.004054166371622569
+Number of nitriles,-0.016606320859997425

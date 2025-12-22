@@ -1,0 +1,80 @@
+===== Attention-DNN 随机种子性能评估报告 =====
+
+评估种子数量: 100
+评估时间: Mon Dec 22 15:06:51 2025
+
+--- 模型改进内容 ---
+1. Attention机制: 自适应学习特征权重
+2. 100个随机种子探索: 寻找最优种子
+3. 特征选择: 移除重要性<0.05的特征
+4. 多项式温度特征: T, T², T³
+
+--- 性能指标统计 ---
+       metric      mean      std       min       max    median
+          MAE  0.597764 0.250899  0.375774  2.270006  0.530268
+          MSE  2.251860 3.448802  0.495658 26.378875  1.098203
+           R²  0.863758 0.212991 -0.670252  0.968340  0.933206
+         RMSE  1.317806 0.721424  0.704030  5.136037  1.047937
+Training Time 18.445224 4.504492 10.847882 34.191540 17.605307
+
+--- 最佳种子 ---
+种子: 50
+MAE: 0.3832
+MSE: 0.4957
+R²: 0.9683
+RMSE: 0.7040
+训练时间: 33.22秒
+
+--- 最差种子 ---
+种子: 74
+MAE: 0.7037
+MSE: 26.3789
+R²: -0.6703
+RMSE: 5.1360
+训练时间: 15.73秒
+
+--- 性能指标相关性 ---
+           mae       mse        r2      rmse
+mae   1.000000  0.434475 -0.422581  0.549103
+mse   0.434475  1.000000 -0.998747  0.963798
+r2   -0.422581 -0.998747  1.000000 -0.956665
+rmse  0.549103  0.963798 -0.956665  1.000000
+
+--- 前10名种子排行 ---
+ rank seed  performance_score       r2      mae
+    1   50           0.922401 0.968340 0.383195
+    2   19           0.918325 0.965239 0.375774
+    3   25           0.917905 0.966475 0.407041
+    4   72           0.916902 0.967178 0.405539
+    5   86           0.913350 0.964793 0.434637
+    6   34           0.912396 0.963517 0.436039
+    7   51           0.908758 0.958234 0.419119
+    8   97           0.907136 0.958111 0.437467
+    9   67           0.902688 0.953115 0.433119
+   10   42           0.902415 0.960279 0.495416
+
+--- 最终模型性能 ---
+种子: 50
+MAE: 0.4387
+MSE: 0.6524
+R²: 0.9583
+RMSE: 0.8077
+
+--- 输出文件 ---
+  - best_attention_dnn_model.h5
+  - optimized_scaler.pkl
+  - random_seeds_performance.csv
+  - performance_statistics.csv
+  - seed_performance_ranking.csv
+  - optimized_feature_importance.csv
+  - performance_boxplots.png
+  - performance_histograms.png
+  - performance_correlation.png
+  - training_time_vs_performance.png
+  - seed_performance_ranking.png
+  - best_worst_seed_comparison.png
+  - optimized_dnn_actual_vs_predicted.png
+  - optimized_dnn_residual_analysis.png
+  - optimized_dnn_training_history.png
+  - optimized_dnn_feature_importance.png
+  - performance_summary.txt

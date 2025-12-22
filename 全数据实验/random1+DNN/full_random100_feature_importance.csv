@@ -1,0 +1,82 @@
+Feature,Importance
+T,21.01019388147551
+salt,6.332425257310629
+c,3.38442974104865
+weighted_Number of sulfones,0.5198406616284926
+weighted_Nitrogen-to-carbon atom ratio,0.5023337792554537
+weighted_Molecular dipole moment,0.40522382726826267
+solvent_ratio_type,0.40215301746426685
+weighted_Molecular radius,0.3556507862692374
+weighted_Number of chiral carbons,0.30723078043113533
+weighted_The ratio of carbon atoms to oxygen atoms,0.20192986285658138
+weighted_Hydrogen-to-carbon atom ratio,0.17111879859246715
+weighted_Rigidity/Flexibility,0.1696203511181578
+weighted_Number of nitriles,0.16764701247889108
+weighted_Boiling point,0.16552184873489642
+weighted_Average atomic mass,0.1593608450122286
+weighted_Average ionization energy,0.15434714354117735
+weighted_Molar volume,0.15357471927874114
+weighted_Number of covalent bond units,0.1417696189599124
+weighted_Lipid solubility,0.1402374403061885
+weighted_The number of oxygen atoms,0.13709683364033182
+weighted_Number of chlorine atoms,0.12827417111616188
+weighted_Melting point,0.11526819896497649
+weighted_Number of undefined stereocenters,0.11024704813876622
+weighted_Molar refractivity,0.1101629056100418
+weighted_Does it have stereocenters,0.10945322832336705
+weighted_Number of halogen atoms,0.10904799536697463
+weighted_Number of hydrogen bond acceptors,0.10651854162566725
+weighted_Number of thioethers,0.10644255631131125
+weighted_Molecular polarizability,0.10074535156278105
+weighted_Minimum ring size,0.10050961191487313
+weighted_Maximum ring size,0.099421864480927
+weighted_Does it have a plane of symmetry,0.09628911581772048
+weighted_Is it a chiral molecule,0.09623084846582955
+weighted_Average electron affinity,0.09553862513257719
+weighted_Number of rotatable bonds.1,0.09223818085870279
+weighted_Average atomic mass of heavy atoms,0.08733270985535165
+weighted_Density,0.08642910617865125
+weighted_Isochoric specific volume,0.08520063686054782
+weighted_Surface tension,0.08507803951617895
+weighted_Isotopic atom count,0.08322056115980689
+weighted_Flash point,0.07988162597057383
+weighted_Viscosity,0.07926165416330408
+weighted_The number of atoms,0.07896377256675316
+weighted_Water solubility,0.07884035303118464
+weighted_Number of nitrogen atoms,0.07878155392834305
+weighted_Fluorine-to-carbon atom ratio,0.07624785346785637
+weighted_Number of aromatic rings,0.07298684397680869
+weighted_Number of fluorides,0.06800528924631463
+weighted_Does it have a center of symmetry,0.06765956746393653
+weighted_Vapor density,0.064267433582704
+weighted_Number of esters,0.0634136807903363
+weighted_Molecular weight,0.05904159708009902
+weighted_The number of rings,0.05869971074478626
+weighted_Sulfur-to-carbon atom ratio,0.05743435746120369
+weighted_Number of hydrogen atoms,0.057197988282922684
+weighted_Molecular complexity,0.055391667562177505
+weighted_Number of sulfur atoms,0.052279419169068954
+weighted_Log P,0.04224148785975614
+weighted_Halogen-to-carbon atom ratio,0.0400093420833781
+weighted_Number of sulfoxides,0.0394659875407537
+weighted_Number of carbonyl groups,0.038429195286347625
+weighted_Number of carbon-carbon double bonds,0.03762573304859777
+weighted_Chlorine-to-carbon atom ratio,0.037617360315762946
+weighted_Number of chlorides,0.034179853679171646
+weighted_Vapor pressure,0.033081953209341444
+weighted_Number of heavy atoms,0.031851427401646946
+weighted_The number of carbon atoms,0.031057266581066157
+weighted_Number of rotatable bonds,0.030448273047163445
+weighted_Polarizability,0.02665748539680739
+weighted_Average electronegativity,0.025670720847990623
+weighted_Number of fluorine atoms,0.024980173547753504
+weighted_Refractive index,0.02309505200626214
+weighted_Number of amines,0.020973198789806212
+weighted_Number of ketones,0.019793400352082012
+weighted_Silicon-to-carbon atom ratio,0.01830790928011139
+weighted_Number of siloxanes,0.01774781428692247
+weighted_Number of ethers,0.016292210502442207
+weighted_Topological polar surface area ,0.012553485952263155
+weighted_Number of silicon atoms,0.007111588871676044
+weighted_Number of aromatic bonds,0.005764384351537366
+weighted_Number of carbon-carbon triple bonds,-0.01485229744226626

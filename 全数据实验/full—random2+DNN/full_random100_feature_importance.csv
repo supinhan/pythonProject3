@@ -1,0 +1,82 @@
+Feature,Importance
+T,22.05274278024593
+salt,6.703420785940615
+c,3.834643773713931
+weighted_Number of nitrogen atoms,0.9510951124533573
+weighted_Molecular radius,0.4356486831375571
+solvent_ratio_type,0.3962972579266919
+weighted_Number of carbonyl groups,0.3453161321926778
+weighted_Nitrogen-to-carbon atom ratio,0.30948122887373763
+weighted_Number of sulfones,0.2984847511647402
+weighted_Maximum ring size,0.27412742635591714
+weighted_Melting point,0.24459148293273633
+weighted_Number of rotatable bonds.1,0.24096306127574332
+weighted_Molecular dipole moment,0.2351077265216627
+weighted_Lipid solubility,0.2348920134237873
+weighted_Number of chiral carbons,0.23147325283460313
+weighted_Average atomic mass of heavy atoms,0.21901268255246992
+weighted_Number of carbon-carbon triple bonds,0.2106291259355461
+weighted_Is it a chiral molecule,0.2084415958698039
+weighted_Number of fluorides,0.2040762279073843
+weighted_Molecular weight,0.191582708679041
+weighted_Number of undefined stereocenters,0.18055449277106014
+weighted_Average atomic mass,0.17476595987553076
+weighted_Vapor density,0.1623551324669143
+weighted_Number of amines,0.1581076259705733
+weighted_Vapor pressure,0.1497941933693455
+weighted_Hydrogen-to-carbon atom ratio,0.1479708391044795
+weighted_Number of hydrogen bond acceptors,0.14686936094599284
+weighted_Number of nitriles,0.14685292953239837
+weighted_Chlorine-to-carbon atom ratio,0.14592737098359296
+weighted_Water solubility,0.142304433893539
+weighted_Molar volume,0.13994908460437164
+weighted_Average electron affinity,0.13934308564341927
+weighted_The ratio of carbon atoms to oxygen atoms,0.13469412700586275
+weighted_Isotopic atom count,0.13062007205994405
+weighted_Number of aromatic rings,0.1275554952328713
+weighted_Fluorine-to-carbon atom ratio,0.1233768892947443
+weighted_Number of thioethers,0.11956249306622764
+weighted_Number of sulfoxides,0.11954177266063518
+weighted_The number of rings,0.1182239886612833
+weighted_Rigidity/Flexibility,0.11409496999740276
+weighted_Number of ethers,0.10647424021445488
+weighted_Number of esters,0.10313961538032197
+weighted_Number of chlorides,0.10097283010109226
+weighted_The number of oxygen atoms,0.10034151003123899
+weighted_Log P,0.09970875029798296
+weighted_Number of covalent bond units,0.09739473868163266
+weighted_Does it have a plane of symmetry,0.0973180467068661
+weighted_Number of sulfur atoms,0.09728886066469086
+weighted_Average electronegativity,0.09544793677633043
+weighted_Does it have a center of symmetry,0.09294094854868903
+weighted_Number of siloxanes,0.09189109107597866
+weighted_Number of halogen atoms,0.09141477139250298
+weighted_Number of chlorine atoms,0.08998119533661293
+weighted_Minimum ring size,0.08156512536711016
+weighted_Number of hydrogen atoms,0.08079201510407966
+weighted_Viscosity,0.07810753092922429
+weighted_The number of atoms,0.07484123476442942
+weighted_Does it have stereocenters,0.07482515949079441
+weighted_Boiling point,0.07122482950675517
+weighted_Number of carbon-carbon double bonds,0.07095535925226501
+weighted_Silicon-to-carbon atom ratio,0.06918655567256116
+weighted_Polarizability,0.0659180038445514
+weighted_Average ionization energy,0.06552681095363362
+weighted_Molecular complexity,0.06546732802855607
+weighted_Number of heavy atoms,0.06474284862596198
+weighted_Molecular polarizability,0.06390802093957366
+weighted_Topological polar surface area ,0.058828271815431245
+weighted_Flash point,0.055125938398730236
+weighted_Refractive index,0.05192515676401142
+weighted_Sulfur-to-carbon atom ratio,0.05169295713102782
+weighted_Halogen-to-carbon atom ratio,0.050187473007587836
+weighted_Surface tension,0.04871967544710274
+weighted_Number of fluorine atoms,0.04448425622904166
+weighted_Density,0.04447426516193902
+weighted_Number of ketones,0.04196531272531125
+weighted_The number of carbon atoms,0.04082560977207459
+weighted_Isochoric specific volume,0.03966451509536269
+weighted_Number of aromatic bonds,0.038559078717479586
+weighted_Number of rotatable bonds,0.029152772618775934
+weighted_Number of silicon atoms,0.023990780436308333
+weighted_Molar refractivity,0.01727312275702262
