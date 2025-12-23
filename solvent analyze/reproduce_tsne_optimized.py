@@ -6,7 +6,6 @@ from sklearn.manifold import TSNE
 from rdkit import Chem
 from rdkit.Chem import AllChem
 
-# Try importing DeepChem, handle if missing
 try:
     import deepchem as dc
     HAS_DEEPCHEM = True
@@ -15,15 +14,13 @@ except ImportError:
     print("DeepChem not found. Using RDKit for fingerprints.")
 
 def load_highlight_smiles(filepath):
-    """Loads SMILES to highlight from CSV (3rd column)."""
+    """Loads"""
     try:
         df = pd.read_csv(filepath)
     except:
         df = pd.read_csv(filepath, encoding='gbk')
-    
-    # Assuming 3rd column contains SMILES
+
     smiles_col = df.iloc[:, 2]
-    # Also get abbreviations if available (1st column)
     abbr_col = df.iloc[:, 0]
     
     highlights = []
@@ -36,7 +33,7 @@ def load_highlight_smiles(filepath):
     return highlights
 
 def load_and_canonicalize_data(filepath):
-    """Loads SMILES from file and canonicalizes them."""
+    """Loads"""
     with open(filepath, 'r', encoding='utf-16') as f:
         smiles_list = [line.strip() for line in f if line.strip()]
     
@@ -48,9 +45,7 @@ def load_and_canonicalize_data(filepath):
     for s in smiles_list:
         mol = Chem.MolFromSmiles(s)
         if mol:
-            # Canonicalize
             can_smi = Chem.MolToSmiles(mol, canonical=True, isomericSmiles=False)
-            # Re-create mol from canonical SMILES to ensure consistency
             mol_can = Chem.MolFromSmiles(can_smi)
             mols.append(mol_can)
             valid_smiles.append(can_smi)
@@ -81,8 +76,7 @@ def categorize_molecule(mol):
     
     category = "Other"
     color = "gray"
-    
-    # Classification logic
+
     if has_carbonyl:
         if is_cyclic:
             category = "Cyclic Carbonyl"
@@ -101,19 +95,17 @@ def categorize_molecule(mol):
     return category, color
 
 def get_fingerprints(mols):
-    """Generates ECFP4 fingerprints (2048 bits)."""
+    """ECFP4 fingerprints"""
     fps = []
     
     if HAS_DEEPCHEM:
-        # DeepChem ECFP4
         try:
             featurizer = dc.feat.CircularFingerprint(size=2048, radius=2)
             features = featurizer.featurize(mols)
             return features
         except Exception as e:
             print(f"DeepChem featurization failed: {e}. Fallback to RDKit.")
-            
-    # RDKit Fallback if DeepChem missing or fails
+
     try:
         from rdkit.Chem import rdFingerprintGenerator
         mfgen = rdFingerprintGenerator.GetMorganGenerator(radius=2, fpSize=2048)
@@ -152,7 +144,6 @@ def main():
         categories.append(cat)
         colors.append(col)
 
-    # Print Category Statistics
     cat_counts = pd.Series(categories).value_counts()
     print("\nCategory Distribution:")
     print(cat_counts)
@@ -162,11 +153,6 @@ def main():
     X = get_fingerprints(mols)
     
     print("Running t-SNE with PCA initialization and Jaccard metric...")
-    # OPTIMIZATION: metric='jaccard' is better for bit vectors (fingerprints)
-    # Note: init='pca' with metric='jaccard' is supported in newer sklearn versions (it runs PCA on X, then uses X for Jaccard distance optimization)
-    # If init='pca' fails with Jaccard in older versions, we might need to change init to 'random'.
-    # But usually scikit-learn handles "init='pca'" by running PCA on the *input* array X (Euclidean), 
-    # and then refining with the *metric* passed (Jaccard).
     
     try:
         tsne = TSNE(n_components=2, verbose=1, perplexity=8, init='pca', metric='jaccard', random_state=0, learning_rate='auto')
@@ -175,8 +161,7 @@ def main():
         print(f"t-SNE with Jaccard failed ({e}). Falling back to euclidean.")
         tsne = TSNE(n_components=2, verbose=1, perplexity=8, init='pca', metric='euclidean', random_state=0, learning_rate='auto')
         X_embedded = tsne.fit_transform(X)
-    
-    # User Request: Invert X axis (Left Positive, Right Negative)
+
     X_embedded[:, 0] = -1 * X_embedded[:, 0]
     
     print("Plotting results...")
@@ -187,10 +172,9 @@ def main():
         'y': X_embedded[:, 1],
         'Category': categories,
         'Color': colors,
-        'SMILES': valid_smiles  # Add SMILES here for matching
+        'SMILES': valid_smiles
     })
-    
-    # Defined order and colors for consistency
+
     cat_map = {
         "Linear Carbonyl": "yellow",
         "Cyclic Carbonyl": "red",
@@ -214,25 +198,19 @@ def main():
     print(f"Plot saved to {output_image}")
     plt.close()
 
-    # User Request: Extra plot highlighting specific SMILES
     highlight_csv = r'e:\python\pythonProject3\chemical_smiles.csv'
     highlight_output_image = r'e:\python\pythonProject3\solvent analyze\tsne_result_highlighted.png'
     
     if os.path.exists(highlight_csv):
         print(f"Generating highlight plot using {highlight_csv}...")
         highlights = load_highlight_smiles(highlight_csv)
-        # Create a dict for fast lookup: smile -> abbreviation
         highlight_dict = {h[0]: h[1] for h in highlights}
         
         plt.figure(figsize=(12, 10))
         
         # Plot all points first as background (grey or faded)
         plt.scatter(df['x'], df['y'], c='lightgrey', alpha=0.5, s=20, label='Background')
-        
-        # Plot highlighted points
-        # Filter df for rows where SMILES is in highlight_dict
-        # We need to ensure we match canonical smiles. 
-        # The 'valid_smiles' in df are canonicalized in load_and_canonicalize_data.
+
         
         highlight_mask = df['SMILES'].isin(highlight_dict.keys())
         highlight_df = df[highlight_mask]
@@ -241,7 +219,6 @@ def main():
             plt.scatter(highlight_df['x'], highlight_df['y'], c='red', s=60, edgecolors='k', label='Target Solvents', zorder=5)
             
             # Add labels
-            # Use a library like adjustText if available, else simple text
             for idx, row in highlight_df.iterrows():
                 label = highlight_dict.get(row['SMILES'], '')
                 plt.text(row['x'], row['y'], label, fontsize=8, ha='right', va='bottom')
@@ -261,11 +238,9 @@ def main():
     else:
         print(f"Highlight file not found: {highlight_csv}")
 
-    # User Request: Export specific features for DNN
-    # Columns: SMILES, 4 binary category columns, tsne_x, tsne_y
+
     output_csv = r'e:\python\pythonProject3\solvent analyze\1423_tsne_features.csv'
-    
-    # Create valid dataframe
+
     export_df = pd.DataFrame({
         'SMILES': valid_smiles,
         'tsne_x': X_embedded[:, 0],
@@ -273,12 +248,11 @@ def main():
         'Category': categories
     })
     
-    # Create the 4 specific binary columns (0 or 1)
+
     target_cats = ['Linear Carbonyl', 'Cyclic Carbonyl', 'Linear Ether', 'Cyclic Ether']
     for cat in target_cats:
         export_df[cat] = (export_df['Category'] == cat).astype(int)
-        
-    # Reorder columns as requested: SMILES, 4 Cats, tsne_x, tsne_y
+
     final_cols = ['SMILES'] + target_cats + ['tsne_x', 'tsne_y']
     export_df = export_df[final_cols]
     

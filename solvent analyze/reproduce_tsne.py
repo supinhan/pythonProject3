@@ -7,7 +7,6 @@ from rdkit import Chem
 from rdkit.Chem import AllChem
 
 
-# Try importing DeepChem, handle if missing
 try:
     import deepchem as dc
     HAS_DEEPCHEM = True
@@ -19,15 +18,6 @@ def load_data(filepath):
     """Loads SMILES from file."""
     with open(filepath, 'r', encoding='utf-16') as f:
         smiles_list = [line.strip() for line in f if line.strip()]
-    # If the file contains headers or other columns, this might need adjustment.
-    # Based on previous check, it seems to be raw text or have some prefix.
-    # The previous `Select-String` output showed lines like "1399.txt:772:CC(C)=O"
-    # implying the file might just be a list of SMILES or have an index.
-    # We'll treat it as a list of strings and clean them up.
-    
-    # Filter out potential file path/line number prefixes if they were just from grep output
-    # But since the user said "1399 molecules data is in 1399.txt", we assume it's just SMILES or SMILES column.
-    # We will validate SMILES with RDKit.
     return smiles_list
 
 def categorize_molecule(mol):
@@ -50,10 +40,7 @@ def categorize_molecule(mol):
     
     has_carbonyl = mol.HasSubstructMatch(carbonyl_pattern)
     has_ether = mol.HasSubstructMatch(ether_pattern)
-    
-    # Classification Logic (Priority: Carbonyl > Ether as per standard nomenclature precedents in this context usually)
-    # If a molecule has both, we need a rule. The prompt implies distinct categories.
-    # Often esters might match both. Let's assume Carbonyl takes precedence for "Carbonyl compounds".
+
     
     category = "Other"
     color = "gray"
@@ -76,18 +63,15 @@ def categorize_molecule(mol):
     return category, color
 
 def get_fingerprints(mols):
-    """Generates ECFP4 fingerprints (2048 bits)."""
+    """ECFP4 fingerprints"""
     fps = []
     
     if HAS_DEEPCHEM:
-        # DeepChem ECFP4
         featurizer = dc.feat.CircularFingerprint(size=2048, radius=2)
-        # featurizer.featurize returns an array of arrays
         features = featurizer.featurize(mols)
         return features
     else:
         # RDKit Fallback
-        # Use rdFingerprintGenerator to avoid deprecation warning for GetMorganFingerprintAsBitVect
         try:
             from rdkit.Chem import rdFingerprintGenerator
             mfgen = rdFingerprintGenerator.GetMorganGenerator(radius=2, fpSize=2048)
@@ -121,7 +105,6 @@ def main():
     
     print("Classifying molecules...")
     for s in raw_smiles:
-        # Simple cleanup if needed (e.g. remove quotes, whitespace)
         s = s.strip()
         mol = Chem.MolFromSmiles(s)
         if mol:
@@ -131,8 +114,6 @@ def main():
             categories.append(cat)
             colors.append(col)
         else:
-            # Try to handle if there's an ID column or something. 
-            # Assuming pure SMILES for now based on '1399.txt' usually implying a list.
             pass
 
     print(f"Valid molecules: {len(mols)} / {len(raw_smiles)}")
@@ -145,27 +126,21 @@ def main():
     X = get_fingerprints(mols)
     
     print("Running t-SNE with PCA initialization...")
-    # "Principal component analysis (PCA) was used to initialize the embedding"
-    # "perplexity setting to 8 and the random state setting to 0"
-    # Removing n_iter which caused TypeError in some sklearn versions/configs. Default is usually sufficient (1000).
     tsne = TSNE(n_components=2, verbose=1, perplexity=8, init='pca', random_state=0, learning_rate='auto')
     X_embedded = tsne.fit_transform(X)
-    
-    # User Request: Invert X axis (Left Positive, Right Negative)
+
     X_embedded[:, 0] = -1 * X_embedded[:, 0]
     
     print("Plotting results...")
     plt.figure(figsize=(10, 8))
-    
-    # Plot each category separately for legend
+
     df = pd.DataFrame({
         'x': X_embedded[:, 0],
         'y': X_embedded[:, 1],
         'Category': categories,
         'Color': colors
     })
-    
-    # Defined order and colors
+
     cat_map = {
         "Linear Carbonyl": "yellow",
         "Cyclic Carbonyl": "red",

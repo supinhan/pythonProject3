@@ -1,5 +1,5 @@
 """
-Attention-DNN 最终模型架构示意图
+模型架构示意图
 """
 
 import matplotlib.pyplot as plt
@@ -12,7 +12,7 @@ plt.rcParams['axes.unicode_minus'] = False
 
 
 def draw_model_architecture():
-    """绘制模型架构图"""
+    """绘制架构图"""
     
     fig, ax = plt.subplots(figsize=(12, 14))
     ax.set_xlim(0, 12)

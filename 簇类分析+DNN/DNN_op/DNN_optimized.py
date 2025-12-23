@@ -1,10 +1,3 @@
-# DNN_optimized.py - 改进版DNN模型
-# 改进内容：
-# 1. Attention机制 - 自适应特征权重
-# 2. K-Fold交叉验证 - 更稳健的评估
-# 3. 特征选择 - 移除重要性<0.05的特征
-# 4. 多项式温度特征 - 捕捉非线性关系
-
 import numpy as np
 import pandas as pd
 import tensorflow as tf
@@ -26,9 +19,7 @@ import matplotlib
 matplotlib.use('Agg')
 warnings.filterwarnings("ignore")
 
-# ============================================
-# 字体配置
-# ============================================
+
 def configure_fonts():
     font_families = ['Microsoft YaHei', 'SimHei', 'KaiTi', 'Arial']
     plt.rcParams['font.family'] = font_families
@@ -46,33 +37,18 @@ def configure_fonts():
 
 configure_fonts()
 
-# ============================================
-# 1. 数据加载与预处理
-# ============================================
-print("=" * 60)
 print("加载数据集...")
-print("=" * 60)
-
-# 读取数据
 df = pd.read_csv(r'..\数据预处理\簇类加权特征数据集.csv')
 
-# 目标变量：k(ms*cm-1)
 y = pd.to_numeric(df.iloc[:, 1], errors='coerce')
-
-# 特征：除目标变量外的所有列
 X_raw = df.drop(df.columns[1], axis=1)
 
 print(f"原始数据形状: {df.shape}")
 print(f"目标变量形状: {y.shape}")
 
-# ============================================
-# 2. 特征选择 - 移除重要性<0.05的特征
-# ============================================
-print("\n" + "=" * 60)
-print("特征选择：移除重要性<0.05的特征")
-print("=" * 60)
+# 特征选择
+print("\n特征选择：移除重要性<0.05的特征")
 
-# 需要保留的特征（重要性>=0.05）- 基于之前的分析
 important_features = [
     'salt', 'T', 'c_val', 'c_units',
     'Nitrogen-to-carbon atom ratio',
@@ -84,7 +60,7 @@ important_features = [
     'Number of esters',
     'Number of covalent bond units',
     'Number of chiral carbons',
-    'tsne_x', 'tsne_y',  # Cluster projection
+    'tsne_x', 'tsne_y',
     'Melting point',
     'solvent_ratio_type',
     'Water solubility',
@@ -130,41 +106,29 @@ important_features = [
     'Number of nitriles',
     'Number of rotatable bonds',
     'Number of carbon-carbon double bonds',
-    # 有机溶剂类型
     'Linear Carbonyl', 'Cyclic Carbonyl', 'Linear Ether', 'Cyclic Ether'
 ]
 
-# 筛选存在的特征
 available_features = [f for f in important_features if f in X_raw.columns]
 print(f"保留的重要特征数量: {len(available_features)}")
 
-# 创建特征子集
 X_selected = X_raw[available_features].copy()
 
-# ============================================
-# 3. 多项式温度特征
-# ============================================
-print("\n" + "=" * 60)
-print("添加多项式温度特征")
-print("=" * 60)
+# 多项式温度特征
+print("\n添加多项式温度特征")
 
 if 'T' in X_selected.columns:
     T_values = X_selected['T'].values.reshape(-1, 1)
     poly = PolynomialFeatures(degree=3, include_bias=False)
     T_poly = poly.fit_transform(T_values)
     
-    # 添加多项式特征（T², T³）
     X_selected['T_squared'] = T_poly[:, 1]
     X_selected['T_cubed'] = T_poly[:, 2]
     print(f"已添加多项式温度特征: T², T³")
     print(f"特征形状变化: {len(available_features)} -> {X_selected.shape[1]}")
 
-# ============================================
-# 4. One-Hot编码
-# ============================================
-print("\n" + "=" * 60)
-print("One-Hot编码分类特征")
-print("=" * 60)
+# One-Hot编码
+print("\nOne-Hot编码分类特征")
 
 categorical_cols = ['salt']
 if 'salt' in X_selected.columns:
@@ -176,102 +140,77 @@ else:
 
 print(f"One-Hot编码后形状: {X_encoded.shape}")
 
-# 移除NaN
 valid_idx = ~(X_encoded.isna().any(axis=1) | y.isna())
 X_encoded = X_encoded[valid_idx]
 y = y[valid_idx]
 print(f"移除NaN后样本数: {len(y)}")
 
-# 保存特征名称
 feature_names = X_encoded.columns.tolist()
 
-# ============================================
-# 5. Attention机制DNN模型
-# ============================================
-print("\n" + "=" * 60)
-print("构建带Attention机制的DNN模型")
-print("=" * 60)
+
+# ---------------------------
+# Attention机制DNN模型
+# ---------------------------
 
 def attention_layer(inputs, name_prefix='attention'):
-    """
-    自注意力机制层
-    学习每个特征的重要性权重
-    """
-    # 注意力权重计算
+    """自注意力机制层"""
     attention_weights = Dense(inputs.shape[-1], activation='tanh', 
                              name=f'{name_prefix}_dense1')(inputs)
     attention_weights = Dense(inputs.shape[-1], activation='softmax',
                              name=f'{name_prefix}_weights')(attention_weights)
-    
-    # 应用注意力权重
     attended = Multiply(name=f'{name_prefix}_multiply')([inputs, attention_weights])
-    
     return attended, attention_weights
 
 def build_attention_dnn(input_dim):
-    """
-    构建带有Attention机制的DNN模型
-    """
-    # 输入层
+    """构建带有Attention机制的DNN模型"""
     inputs = Input(shape=(input_dim,), name='input')
     
-    # 第一个Attention层 - 学习原始特征重要性
     x, attn_weights = attention_layer(inputs, name_prefix='attn1')
     
-    # 第一个Dense块
     x = Dense(128, activation='relu', name='dense1')(x)
     x = BatchNormalization(name='bn1')(x)
     x = Dropout(0.3, name='dropout1')(x)
     
-    # 第二个Dense块
     x = Dense(256, activation='relu', name='dense2')(x)
     x = BatchNormalization(name='bn2')(x)
     x = Dropout(0.4, name='dropout2')(x)
     
-    # 第二个Attention层 - 学习隐藏特征重要性
     x, _ = attention_layer(x, name_prefix='attn2')
     
-    # 第三个Dense块（最宽）
     x = Dense(512, activation='relu', name='dense3')(x)
     x = BatchNormalization(name='bn3')(x)
     x = Dropout(0.5, name='dropout3')(x)
     
-    # 第四个Dense块
     x = Dense(256, activation='relu', name='dense4')(x)
     x = BatchNormalization(name='bn4')(x)
     x = Dropout(0.4, name='dropout4')(x)
     
-    # 第五个Dense块
     x = Dense(128, activation='relu', name='dense5')(x)
     x = BatchNormalization(name='bn5')(x)
     x = Dropout(0.3, name='dropout5')(x)
     
-    # 输出层
     outputs = Dense(1, activation='linear', name='output')(x)
     
     model = Model(inputs=inputs, outputs=outputs, name='AttentionDNN')
     return model
 
-# ============================================
-# 6. K-Fold交叉验证训练
-# ============================================
-print("\n" + "=" * 60)
-print("K-Fold交叉验证训练 (5-Fold)")
-print("=" * 60)
+
+# ---------------------------
+# K-Fold交叉验证训练
+# ---------------------------
+
+print("\nK-Fold交叉验证训练 (5-Fold)")
 
 N_FOLDS = 5
 EPOCHS = 200
 BATCH_SIZE = 64
 
-# 标准化
 scaler = StandardScaler()
 X_scaled = scaler.fit_transform(X_encoded)
 y_values = y.values
 
-# 保存scaler
 joblib.dump(scaler, 'optimized_scaler.pkl')
 
-# K-Fold交叉验证
 kfold = KFold(n_splits=N_FOLDS, shuffle=True, random_state=42)
 
 fold_results = []
@@ -286,7 +225,6 @@ for fold, (train_idx, val_idx) in enumerate(kfold.split(X_scaled)):
     y_train_fold = y_values[train_idx]
     y_val_fold = y_values[val_idx]
     
-    # 构建模型
     model = build_attention_dnn(X_scaled.shape[1])
     model.compile(
         optimizer=Adam(learning_rate=0.001),
@@ -297,13 +235,11 @@ for fold, (train_idx, val_idx) in enumerate(kfold.split(X_scaled)):
     if fold == 0:
         model.summary()
     
-    # 回调函数
     callbacks = [
         EarlyStopping(monitor='val_loss', patience=20, restore_best_weights=True),
         ReduceLROnPlateau(monitor='val_loss', factor=0.2, patience=10, min_lr=1e-6)
     ]
     
-    # 训练
     history = model.fit(
         X_train_fold, y_train_fold,
         epochs=EPOCHS,
@@ -315,11 +251,9 @@ for fold, (train_idx, val_idx) in enumerate(kfold.split(X_scaled)):
     
     all_histories.append(history)
     
-    # 验证集预测
     y_pred_fold = model.predict(X_val_fold, verbose=0).flatten()
     all_predictions[val_idx] = y_pred_fold
     
-    # 计算指标
     fold_mse = mean_squared_error(y_val_fold, y_pred_fold)
     fold_mae = mean_absolute_error(y_val_fold, y_pred_fold)
     fold_r2 = r2_score(y_val_fold, y_pred_fold)
@@ -333,12 +267,12 @@ for fold, (train_idx, val_idx) in enumerate(kfold.split(X_scaled)):
     
     print(f"  MSE: {fold_mse:.4f}, MAE: {fold_mae:.4f}, R²: {fold_r2:.4f}")
 
-# ============================================
-# 7. 汇总K-Fold结果
-# ============================================
-print("\n" + "=" * 60)
-print("K-Fold交叉验证结果汇总")
-print("=" * 60)
+
+# ---------------------------
+# K-Fold结果汇总
+# ---------------------------
+
+print("\nK-Fold交叉验证结果汇总")
 
 results_df = pd.DataFrame(fold_results)
 print(results_df.to_string(index=False))
@@ -348,22 +282,19 @@ print(f"  MSE: {results_df['mse'].mean():.4f} ± {results_df['mse'].std():.4f}")
 print(f"  MAE: {results_df['mae'].mean():.4f} ± {results_df['mae'].std():.4f}")
 print(f"  R²:  {results_df['r2'].mean():.4f} ± {results_df['r2'].std():.4f}")
 
-# 保存K-Fold结果
 results_df.to_csv('kfold_results.csv', index=False)
 
-# ============================================
-# 8. 训练最终模型（全数据集）
-# ============================================
-print("\n" + "=" * 60)
-print("训练最终模型（全数据集）")
-print("=" * 60)
 
-# 数据分割用于最终评估
+# ---------------------------
+# 训练最终模型
+# ---------------------------
+
+print("\n训练最终模型（全数据集）")
+
 X_train, X_test, y_train, y_test = train_test_split(
     X_scaled, y_values, test_size=0.2, random_state=42
 )
 
-# 构建并训练最终模型
 final_model = build_attention_dnn(X_scaled.shape[1])
 final_model.compile(
     optimizer=Adam(learning_rate=0.001),
@@ -385,7 +316,6 @@ final_history = final_model.fit(
     verbose=1
 )
 
-# 最终评估
 test_loss, test_mae = final_model.evaluate(X_test, y_test, verbose=0)
 y_pred = final_model.predict(X_test, verbose=0).flatten()
 r2 = r2_score(y_test, y_pred)
@@ -395,14 +325,13 @@ print(f"  MSE: {test_loss:.4f}")
 print(f"  MAE: {test_mae:.4f}")
 print(f"  R²:  {r2:.4f}")
 
-# ============================================
-# 9. 可视化
-# ============================================
-print("\n" + "=" * 60)
-print("生成可视化图表")
-print("=" * 60)
 
-# 9.1 实际值 vs 预测值
+# ---------------------------
+# 可视化
+# ---------------------------
+
+print("\n生成可视化图表")
+
 plt.figure(figsize=(10, 8))
 plt.scatter(y_test, y_pred, alpha=0.6, edgecolor='k', s=80)
 plt.plot([min(y_test), max(y_test)], [min(y_test), max(y_test)], 
@@ -421,9 +350,8 @@ plt.grid(True, linestyle='--', alpha=0.5)
 plt.tight_layout()
 plt.savefig('optimized_dnn_actual_vs_predicted.png', dpi=300)
 plt.close()
-print("  ✓ 保存: optimized_dnn_actual_vs_predicted.png")
 
-# 9.2 残差分析
+# 残差分析
 residuals = y_test.flatten() - y_pred.flatten()
 plt.figure(figsize=(14, 5))
 
@@ -444,9 +372,8 @@ plt.ylabel('残差', fontsize=12)
 plt.tight_layout()
 plt.savefig('optimized_dnn_residual_analysis.png', dpi=300)
 plt.close()
-print("  ✓ 保存: optimized_dnn_residual_analysis.png")
 
-# 9.3 训练历史
+# 训练历史可视化
 plt.figure(figsize=(14, 5))
 
 plt.subplot(1, 2, 1)
@@ -470,9 +397,8 @@ plt.grid(True, alpha=0.3)
 plt.tight_layout()
 plt.savefig('optimized_dnn_training_history.png', dpi=300)
 plt.close()
-print("  ✓ 保存: optimized_dnn_training_history.png")
 
-# 9.4 K-Fold结果对比
+# K-Fold结果对比
 plt.figure(figsize=(10, 6))
 x = np.arange(N_FOLDS)
 width = 0.25
@@ -490,14 +416,13 @@ plt.grid(True, axis='y', alpha=0.3)
 plt.tight_layout()
 plt.savefig('optimized_dnn_kfold_comparison.png', dpi=300)
 plt.close()
-print("  ✓ 保存: optimized_dnn_kfold_comparison.png")
 
-# ============================================
-# 10. 特征重要性（分组）
-# ============================================
-print("\n" + "=" * 60)
-print("计算分组特征重要性")
-print("=" * 60)
+
+# ---------------------------
+# 特征重要性（分组）
+# ---------------------------
+
+print("\n计算分组特征重要性")
 
 def get_feature_groups(all_columns, categorical_cols):
     groups = {}
@@ -535,10 +460,9 @@ def grouped_permutation_importance(model, X, y, groups, metric=mean_squared_erro
     
     return importances
 
-# 特征分组
 groups = get_feature_groups(feature_names, categorical_cols)
 
-# 合并 c_val 和 c_units 为 'c'
+# 合并 c_val 和 c_units
 c_indices = []
 if 'c_val' in groups:
     c_indices.extend(groups['c_val'])
@@ -549,7 +473,7 @@ if 'c_units' in groups:
 if c_indices:
     groups['c'] = c_indices
 
-# 合并温度相关特征
+# 合并温度特征
 temp_indices = []
 for col in ['T', 'T_squared', 'T_cubed']:
     if col in groups:
@@ -578,19 +502,15 @@ for st in solvent_types:
 if type_indices:
     groups['Types of organic solvents'] = type_indices
 
-# 计算特征重要性
 feature_importances = grouped_permutation_importance(final_model, X_test, y_test, groups)
 
-# 创建DataFrame并保存
 feature_importance_df = pd.DataFrame({
     'Feature': list(feature_importances.keys()),
     'Importance': list(feature_importances.values())
 }).sort_values('Importance', ascending=False)
 
 feature_importance_df.to_csv('optimized_feature_importance.csv', index=False)
-print("  ✓ 保存: optimized_feature_importance.csv")
 
-# 绘制特征重要性图
 top_n = min(20, len(feature_importance_df))
 plt.figure(figsize=(12, 8))
 sns.barplot(
@@ -613,24 +533,14 @@ plt.grid(axis='x', linestyle='--', alpha=0.7)
 plt.tight_layout()
 plt.savefig('optimized_dnn_feature_importance.png', dpi=300)
 plt.close()
-print("  ✓ 保存: optimized_dnn_feature_importance.png")
 
-# ============================================
-# 11. 保存模型
-# ============================================
-print("\n" + "=" * 60)
-print("保存模型")
-print("=" * 60)
+
+# ---------------------------
+# 模型保存
+# ---------------------------
 
 final_model.save('optimized_attention_dnn_model.h5')
-print("  ✓ 模型保存: optimized_attention_dnn_model.h5")
-
-# ============================================
-# 12. 结果摘要
-# ============================================
-print("\n" + "=" * 60)
-print("优化后模型结果摘要")
-print("=" * 60)
+print("\n模型保存: optimized_attention_dnn_model.h5")
 
 print(f"""
 模型改进内容:
@@ -648,17 +558,6 @@ K-Fold交叉验证结果:
   R²:  {r2:.4f}
   MSE: {test_loss:.4f}
   MAE: {test_mae:.4f}
-
-输出文件:
-  - optimized_attention_dnn_model.h5
-  - optimized_scaler.pkl
-  - kfold_results.csv
-  - optimized_feature_importance.csv
-  - optimized_dnn_actual_vs_predicted.png
-  - optimized_dnn_residual_analysis.png
-  - optimized_dnn_training_history.png
-  - optimized_dnn_kfold_comparison.png
-  - optimized_dnn_feature_importance.png
 """)
 
 print("训练完成!")
